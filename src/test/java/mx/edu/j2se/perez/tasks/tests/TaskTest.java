@@ -15,5 +15,8 @@ public class TaskTest {
         Assert.assertEquals(tarea.nextTimeAfter(3),4);
         Assert.assertEquals(tarea.nextTimeAfter(8),10);
         Assert.assertEquals(tarea.nextTimeAfter(12),-1);
+        tarea.setTime(5);
+        Assert.assertFalse(tarea.isRepeated());
+        Assert.assertEquals(tarea.nextTimeAfter(5),-1);
     }
 }

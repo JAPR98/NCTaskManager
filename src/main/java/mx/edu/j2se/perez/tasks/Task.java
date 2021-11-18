@@ -7,7 +7,7 @@ package mx.edu.j2se.perez.tasks;
  * behavior and also provides different results when
  * their methods are executed.
  *
- * @version     1.0 14 Nov 2021
+ * @version     1.1 17 Nov 2021
  * @author      José Antonio Pérez Rodríguez
  */
 public class Task {
@@ -52,25 +52,19 @@ public class Task {
      * gets the task name
      * @return task name
      */
-    public String getTitle() {
-        return this.title;
-    }
+    public String getTitle() { return this.title; }
 
     /**
      * sets the task name
      * @param title task name
      */
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    public void setTitle(String title) { this.title = title; }
 
     /**
      * informs whether the task is in active status
      * @return task status
      */
-    public boolean isActive() {
-        return this.isActive;
-    }
+    public boolean isActive() { return this.isActive; }
 
     /**
      * sets the task status
@@ -184,21 +178,25 @@ public class Task {
     /**
      * returns the next start time of the task execution after the current time.
      * @param current the actual time of execution
-     * @return wheter is not a repetitive, active, or the current time is later
+     * @return wheter is not an active task, or the current time is later
      *         the taks end time, returns -1, otherwise returns the task next
      *         start time of the task execution after the current time
      */
     public int nextTimeAfter(int current) {
-        if (!this.isRepetitive || !this.isActive) {
+        if (!this.isActive) {
             return -1;
         }
-        if (this.start > current) {
-            return this.start;
-        }
-        for (int i = this.start; i <= (this.end - this.interval);
-                i += this.interval) {
-            if (current < (i + this.interval)) {
-                return (i + this.interval);
+        if (!this.isRepetitive && this.time > current){
+            return this.time;
+        } else {
+            if (this.start > current) {
+                return this.start;
+            }
+            for (int i = this.start; i <= (this.end - this.interval);
+                    i += this.interval) {
+                if (current < (i + this.interval)) {
+                    return (i + this.interval);
+                }
             }
         }
         return -1;
