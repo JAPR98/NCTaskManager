@@ -7,7 +7,7 @@ package mx.edu.j2se.perez.tasks;
  * behavior and also provides different results when
  * their methods are executed.
  *
- * @version     1.1 17 Nov 2021
+ * @version     1.1.2 19 Nov 2021
  * @author      José Antonio Pérez Rodríguez
  */
 public class Task {
@@ -186,8 +186,9 @@ public class Task {
         if (!this.isActive) {
             return -1;
         }
-        if (!this.isRepetitive && this.time > current){
-            return this.time;
+        if (!this.isRepetitive){
+            int execTime = (this.time > current) ? this.time : -1;
+            return execTime;
         } else {
             if (this.start > current) {
                 return this.start;
