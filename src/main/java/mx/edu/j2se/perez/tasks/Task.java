@@ -7,7 +7,7 @@ package mx.edu.j2se.perez.tasks;
  * behavior and also provides different results when
  * their methods are executed.
  *
- * @version     1.1.2 19 Nov 2021
+ * @version     1.2 22 Nov 2021
  * @author      José Antonio Pérez Rodríguez
  */
 public class Task {
@@ -201,5 +201,33 @@ public class Task {
             }
         }
         return -1;
+    }
+
+    /**
+     * allows to compare whether to task objects are the same
+     * @param obj the object to be compared against the current object
+     * @return whether the object is equal to the current object, returns
+     * true, otherwise returns false
+     */
+    @Override
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if ((obj != null) && (obj instanceof Task)) {
+            Task taskObj = (Task)obj;
+            if (taskObj.isRepeated()) {
+                if (this.title.equals(taskObj.getTitle()) &&
+                        (this.start == taskObj.getStartTime()) &&
+                        (this.end == taskObj.getEndTime()) &&
+                        (this.interval == taskObj.getRepeatInterval())) {
+                    result = true;
+                }
+            } else {
+                if (this.title.equals(taskObj.getTitle()) &&
+                        (this.time == taskObj.getTime())) {
+                    result = true;
+                }
+            }
+        }
+        return result;
     }
 }
