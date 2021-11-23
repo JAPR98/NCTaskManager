@@ -1,5 +1,6 @@
 package mx.edu.j2se.perez.tasks.tests;
 
+import mx.edu.j2se.perez.tasks.ArrayTaskList;
 import mx.edu.j2se.perez.tasks.Task;
 import org.junit.Assert;
 import org.junit.Test;
@@ -55,5 +56,32 @@ public class TaskTest {
         Assert.assertEquals(taskNR.nextTimeAfter(3),5);
         Assert.assertEquals(taskNR.nextTimeAfter(5),-1);
         Assert.assertEquals(taskNR.nextTimeAfter(6),-1);
+    }
+    
+    @Test
+    public void testArrayTaskListMethods(){
+        Task taskR1 = new Task("Repetitive task 1", 4, 1, 2);
+        taskR1.setActive(true);
+        Task taskR2 = new Task("Repetitive task 2", 1, 5, 2);
+        taskR2.setActive(true);
+        Task taskNR1 = new Task("Non Repetitive task 1", 7);
+        taskNR1.setActive(true);
+        Task taskNR2 = new Task("Non Repetitive task 2", 2);
+        taskNR2.setActive(true);
+        ArrayTaskList array = new ArrayTaskList();
+        array.add(taskR1);
+        array.add(taskR1);
+        array.add(taskR2); //will stay after the remove method execution
+        array.add(taskNR1); //will stay after the remove method execution
+        array.add(taskR1);
+        array.add(taskNR2); //will stay after the remove method execution
+        Assert.assertEquals(array.size(),6);
+        array.remove(taskR1);
+        Assert.assertEquals(array.size(),3);
+        ArrayTaskList arrayTest = array.incoming(2,7);
+        Assert.assertEquals(arrayTest.size(), 2);
+        for (int i = 0; i < arrayTest.size(); i++){
+            System.out.println(arrayTest.getTask(i).getTitle());
+        }
     }
 }
