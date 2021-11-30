@@ -7,7 +7,7 @@ package mx.edu.j2se.perez.tasks;
  * behavior and also provides different results when
  * their methods are executed.
  *
- * @version     1.2 22 Nov 2021
+ * @version     2.0 22 Nov 2021
  * @author      José Antonio Pérez Rodríguez
  */
 public class Task {
@@ -24,12 +24,23 @@ public class Task {
      * constructor that creates a non-repetitive task
      * @param title task name
      * @param time task execution time
+     * @throws IllegalArgumentException whether the title is null or the given
+     *         time is lower than 0
      */
-    public Task(String title, int time) {
-        this.title = title;
-        this.time = time;
-        this.isActive = false;
-        this.isRepetitive = false;
+    public Task(String title, int time) throws
+            IllegalArgumentException {
+        if (title == null) {
+            throw new IllegalArgumentException("The title " +
+                    "mustn´t be null");
+        } else if (time < 0){
+            throw new IllegalArgumentException("The time " +
+                    "mustn´t be lower than 0");
+        } else {
+            this.title = title;
+            this.time = time;
+            this.isActive = false;
+            this.isRepetitive = false;
+        }
     }
 
     /**
@@ -38,14 +49,33 @@ public class Task {
      * @param start time from which the task is to be repeated
      * @param end time at which the task repetition ends
      * @param interval task repetition time
+     * @throws IllegalArgumentException whether the title is null, the
+     *         start or end time are lower than 0, the start time is
+     *         greater than or equal to end time or the interval is lower
+     *         than 1
      */
-    public Task(String title, int start, int end, int interval) {
-        this.title = title;
-        this.start = start;
-        this.end = end;
-        this.interval = interval;
-        this.isActive = false;
-        this.isRepetitive = true;
+    public Task(String title, int start, int end, int interval) throws
+            IllegalArgumentException{
+        if (title == null) {
+            throw new IllegalArgumentException("The title mustn´t " +
+                    "be null");
+        } else if ((start < 0) || (end < 0)) {
+            throw new IllegalArgumentException("The start and end " +
+                    "time must be equal or greather than 0");
+        } else if (start >= end) {
+            throw new IllegalArgumentException("The end time must " +
+                    "be greater than star time");
+        } else if (interval < 1){
+            throw new IllegalArgumentException("The interval must " +
+                    "be greater than 0");
+        } else {
+            this.title = title;
+            this.start = start;
+            this.end = end;
+            this.interval = interval;
+            this.isActive = false;
+            this.isRepetitive = true;
+        }
     }
 
     /**
@@ -57,8 +87,16 @@ public class Task {
     /**
      * sets the task name
      * @param title task name
+     * @throws IllegalArgumentException whether the given title is null
      */
-    public void setTitle(String title) { this.title = title; }
+    public void setTitle(String title) throws IllegalArgumentException{
+        if (title == null) {
+            throw new IllegalArgumentException("The title mustn´t " +
+                    "be null");
+        } else {
+            this.title = title;
+        }
+    }
 
     /**
      * informs whether the task is in active status
@@ -92,15 +130,22 @@ public class Task {
      * converts the task from a repetitive one to a non-repetitive
      * one if is not, and set the execution time as well
      * @param time task execution time
+     * @throws IllegalArgumentException whether the given time is
+     *         lower than 0
      */
-    public void setTime(int time) {
-        if (this.isRepetitive) {
-            this.isRepetitive = false;
-            this.start = 0;
-            this.end = 0;
-            this.interval = 0;
+    public void setTime(int time) throws IllegalArgumentException{
+        if (time < 0) {
+            throw new IllegalArgumentException("The time mustn´t" +
+                    "be lower than 0");
+        } else {
+            if (this.isRepetitive) {
+                this.isRepetitive = false;
+                this.start = 0;
+                this.end = 0;
+                this.interval = 0;
+            }
+            this.time = time;
         }
-        this.time = time;
     }
 
     /**
@@ -152,18 +197,33 @@ public class Task {
      * @param start time from which the task is to be repeated
      * @param end time at which the task repetition ends
      * @param interval task repetition time
+     * @throws IllegalArgumentException whether the start or end time are
+     *         lower than 0, the start time is greater than or equal to
+     *         end time or the interval is lower than 1
      */
-    public void setTime(int start, int end, int interval) {
-        if (this.isRepetitive) {;
-            this.start = start;
-            this.end = end;
-            this.interval = interval;
+    public void setTime(int start, int end, int interval) throws
+            IllegalArgumentException{
+        if ((start < 0) || (end < 0)) {
+            throw new IllegalArgumentException("The start and end " +
+                    "time must be equal or greather than 0");
+        } else if (start >= end) {
+            throw new IllegalArgumentException("The end time must " +
+                    "be greater than star time");
+        } else if (interval < 1){
+            throw new IllegalArgumentException("The interval must " +
+                    "be greater than 0");
         } else {
-            this.isRepetitive = true;
-            this.time = 0;
-            this.start = start;
-            this.end = end;
-            this.interval = interval;
+            if (this.isRepetitive) {;
+                this.start = start;
+                this.end = end;
+                this.interval = interval;
+            } else {
+                this.isRepetitive = true;
+                this.time = 0;
+                this.start = start;
+                this.end = end;
+                this.interval = interval;
+            }
         }
     }
 
@@ -179,24 +239,30 @@ public class Task {
      * returns the next start time of the task execution after the current time.
      * @param current the actual time of execution
      * @return wheter is not an active task, or the current time is later
-     *         the taks end time, returns -1, otherwise returns the task next
-     *         start time of the task execution after the current time
+     *         the taks end time, returns -1, otherwise returns the task
+     *         next start time of the task execution after the current time
+     * @throws IllegalArgumentException wether the current time is lower than 0
      */
-    public int nextTimeAfter(int current) {
-        if (!this.isActive) {
-            return -1;
-        }
-        if (!this.isRepetitive){
-            int execTime = (this.time > current) ? this.time : -1;
-            return execTime;
+    public int nextTimeAfter(int current) throws IllegalArgumentException{
+        if (current < 0) {
+            throw new IllegalArgumentException("The current time must " +
+                    "be equal or greater than 0");
         } else {
-            if (this.start > current) {
-                return this.start;
+            if (!this.isActive) {
+                return -1;
             }
-            for (int i = this.start; i <= (this.end - this.interval);
-                    i += this.interval) {
-                if (current < (i + this.interval)) {
-                    return (i + this.interval);
+            if (!this.isRepetitive){
+                int execTime = (this.time > current) ? this.time : -1;
+                return execTime;
+            } else {
+                if (this.start > current) {
+                    return this.start;
+                }
+                for (int i = this.start; i <= (this.end - this.interval);
+                     i += this.interval) {
+                    if (current < (i + this.interval)) {
+                        return (i + this.interval);
+                    }
                 }
             }
         }
@@ -204,7 +270,7 @@ public class Task {
     }
 
     /**
-     * allows to compare whether to task objects are the same
+     * allows to compare whether two task objects are the same
      * @param obj the object to be compared against the current object
      * @return whether the object is equal to the current object, returns
      * true, otherwise returns false

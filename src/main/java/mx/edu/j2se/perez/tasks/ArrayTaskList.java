@@ -6,7 +6,7 @@ package mx.edu.j2se.perez.tasks;
  * other methods that let you use the class like a
  * list.
  *
- * @version     1.0 22 Nov 2021
+ * @version     2.0 29 Nov 2021
  * @author      José Antonio Pérez Rodríguez
  */
 public class ArrayTaskList {
@@ -21,15 +21,21 @@ public class ArrayTaskList {
     }
 
     /**
-     * adds the given task to the end of the task list
+     * adds the given task to the end of the tasks list
      * @param task task to be added to the list of tasks
+     * @throws IllegalArgumentException whether the task is null
      */
-    public void add(Task task) {
-        Task[] taskArrayAux = new Task[taskArray.length + 1];
-        System.arraycopy(taskArray, 0, taskArrayAux, 0,
-                taskArray.length);
-        taskArrayAux[taskArray.length] = task;
-        taskArray = taskArrayAux;
+    public void add(Task task) throws IllegalArgumentException {
+        if (task == null) {
+            throw new IllegalArgumentException("The task " +
+                    "mustn't be null");
+        } else {
+            Task[] taskArrayAux = new Task[taskArray.length + 1];
+            System.arraycopy(taskArray, 0, taskArrayAux,
+                    0, taskArray.length);
+            taskArrayAux[taskArray.length] = task;
+            taskArray = taskArrayAux;
+        }
     }
 
     /**
@@ -38,12 +44,21 @@ public class ArrayTaskList {
      * repetition also
      * @param task the task to be eliminated from the
      *             list of tasks
-     * @return whether the task is in the task list,
+     * @return whether the task is in the tasks list,
      * returns true, otherwise, returns false
+     * @throws IllegalArgumentException whether the task
+     *         is null
+     * @throws RuntimeException whether the task array is
+     *         null
      */
-    public boolean remove(Task task) {
+    public boolean remove(Task task) throws IllegalArgumentException,
+            RuntimeException {
         boolean isInTheList = false;
-        if (taskArray.length > 0) {
+        if (task == null) {
+            throw new IllegalArgumentException("The task mustn't be null");
+        } else if (taskArray.length == 0) {
+            throw new RuntimeException("The tasks array is empty");
+        } else {
             if ((taskArray.length == 1) && task.equals(taskArray[0])) {
                 isInTheList = true;
                 taskArray = new Task[0];
@@ -53,17 +68,18 @@ public class ArrayTaskList {
                         isInTheList = true;
                         Task[] taskArrayAux = new Task[taskArray.length - 1];
                         if (i == 0) {
-                            System.arraycopy(taskArray, 1, taskArrayAux, 0,
-                                    taskArray.length - 1);
+                            System.arraycopy(taskArray, 1, taskArrayAux,
+                                    0, taskArray.length - 1);
                             taskArray = taskArrayAux;
                         } else if (i == taskArray.length - 1) {
-                            System.arraycopy(taskArray, 0, taskArrayAux, 0,
-                                    taskArray.length - 1);
+                            System.arraycopy(taskArray, 0, taskArrayAux,
+                                    0, taskArray.length - 1);
                             taskArray = taskArrayAux;
                         } else {
-                            System.arraycopy(taskArray, 0, taskArrayAux, 0, i);
-                            System.arraycopy(taskArray, i + 1, taskArrayAux, i,
-                                    taskArray.length - (i + 1));
+                            System.arraycopy(taskArray, 0, taskArrayAux,
+                                    0, i);
+                            System.arraycopy(taskArray, i + 1, taskArrayAux,
+                                    i, taskArray.length - (i + 1));
                             taskArray = taskArrayAux;
                         }
                     }
@@ -78,36 +94,54 @@ public class ArrayTaskList {
 
     /**
      * allows to obtain the size of the task list
-     * @return the size of the list
+     * @return the size of the tasks list
      */
     public int size() {
         return taskArray.length;
     }
 
     /**
-     * allows to obtain a task from the task list using
+     * allows to obtain a task from the tasks list using
      * the given index
      * @param index the index of the task
      * @return the task indicated by the index
+     * @throws IndexOutOfBoundsException whether the element
+     *         pointed by the index doesn't exist
      */
-    public Task getTask(int index) {
+    public Task getTask(int index) throws IndexOutOfBoundsException {
+        if (((index + 1) > size()) || (index < 0)) {
+            throw new IndexOutOfBoundsException();
+        }
         return taskArray[index];
     }
 
     /**
-     * allows to obtain a subset from the task list, which is
+     * allows to obtain a subset from the tasks list, which is
      * limited by the from and to parameters
      * @param from the lower limit of task execution time allowed
      * @param to the upper limit of task execution time allowed
      * @return an ArrayList object that contains the subset of the
      * tasks limited by the aforementioned parameters
+     * @throws IllegalArgumentException whether the to or from
+     *         parameter are lower than 0 or the from parameter is
+     *         greater or equal than the to parameter
      */
-    public ArrayTaskList incoming(int from, int to) {
-        ArrayTaskList resultArray = new ArrayTaskList();
-        for (int i = 0; i < taskArray.length; i++) {
-            if ((taskArray[i].nextTimeAfter(from) <= to) &&
-                    (taskArray[i].nextTimeAfter(from) != -1)) {
-                resultArray.add(taskArray[i]);
+    public ArrayTaskList incoming(int from, int to) throws
+            IllegalArgumentException{
+        ArrayTaskList resultArray;
+        if ((from < 0) || (to < 0)) {
+            throw new IllegalArgumentException("from and to " +
+                    "parameters must be greater or equal than 0");
+        } else if (from >= to) {
+            throw new IllegalArgumentException("The from parameter " +
+                    "must be lower than the to parameter");
+        } else {
+            resultArray = new ArrayTaskList();
+            for (int i = 0; i < taskArray.length; i++) {
+                if ((taskArray[i].nextTimeAfter(from) <= to) &&
+                        (taskArray[i].nextTimeAfter(from) != -1)) {
+                    resultArray.add(taskArray[i]);
+                }
             }
         }
         return resultArray;
