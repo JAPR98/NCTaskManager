@@ -1,6 +1,7 @@
 package mx.edu.j2se.perez.tasks.tests;
 
 import mx.edu.j2se.perez.tasks.ArrayTaskList;
+import mx.edu.j2se.perez.tasks.LinkedTaskList;
 import mx.edu.j2se.perez.tasks.Task;
 import org.junit.Assert;
 import org.junit.Test;
@@ -83,5 +84,30 @@ public class TaskTest {
         for (int i = 0; i < arrayTest.size(); i++){
             System.out.println(arrayTest.getTask(i).getTitle());
         }
+    }
+    @Test
+    public void testLinkedTaskListMethods(){
+        Task taskR1 = new Task("Repetitive task 1", 4, 5, 2);
+        taskR1.setActive(true);
+        Task taskR2 = new Task("Repetitive task 2", 1, 5, 2);
+        taskR2.setActive(true);
+        Task taskNR1 = new Task("Non Repetitive task 1", 7);
+        taskNR1.setActive(true);
+        Task taskNR2 = new Task("Non Repetitive task 2", 2);
+        taskNR2.setActive(true);
+        LinkedTaskList list = new LinkedTaskList();
+        list.add(taskR1);
+        list.add(taskR1);
+        list.add(taskR2); //will stay after the remove method execution
+        list.add(taskNR1); //will stay after the remove method execution
+        list.add(taskR1);
+        list.add(taskNR2); //will stay after the remove method execution
+        Assert.assertEquals(list.size(),6);
+        list.remove(taskR1);
+        Assert.assertEquals(list.size(),3);
+        LinkedTaskList listTest = list.incoming(2,7);
+        Assert.assertEquals(listTest.size(), 2);
+        System.out.println(listTest.getTask(0).getTitle());
+        System.out.println(listTest.getTask(1).getTitle());
     }
 }
