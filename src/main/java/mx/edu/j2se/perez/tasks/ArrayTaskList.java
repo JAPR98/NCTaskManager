@@ -9,15 +9,17 @@ package mx.edu.j2se.perez.tasks;
  * @version     2.0 29 Nov 2021
  * @author      José Antonio Pérez Rodríguez
  */
-public class ArrayTaskList {
+public class ArrayTaskList extends AbstractTaskList {
 
     private Task[] taskArray;       //Structure used to storage the task objects
+    private int size;               //The size of the array
 
     /**
      * Constructor used to initialize the task list
      */
     public ArrayTaskList() {
         taskArray = new Task[0];
+        size = 0;
     }
 
     /**
@@ -35,6 +37,7 @@ public class ArrayTaskList {
                     0, taskArray.length);
             taskArrayAux[taskArray.length] = task;
             taskArray = taskArrayAux;
+            size++;
         }
     }
 
@@ -89,6 +92,7 @@ public class ArrayTaskList {
                 }
             }
         }
+        size = taskArray.length;
         return isInTheList;
     }
 
@@ -97,7 +101,7 @@ public class ArrayTaskList {
      * @return the size of the tasks list
      */
     public int size() {
-        return taskArray.length;
+        return size;
     }
 
     /**
@@ -137,10 +141,10 @@ public class ArrayTaskList {
                     "must be lower than the to parameter");
         } else {
             resultArray = new ArrayTaskList();
-            for (int i = 0; i < taskArray.length; i++) {
-                if ((taskArray[i].nextTimeAfter(from) <= to) &&
-                        (taskArray[i].nextTimeAfter(from) != -1)) {
-                    resultArray.add(taskArray[i]);
+            for (int i = 0; i < size; i++) {
+                if ((getTask(i).nextTimeAfter(from) <= to) &&
+                        (getTask(i).nextTimeAfter(from) != -1)) {
+                    resultArray.add(getTask(i));
                 }
             }
         }

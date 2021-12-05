@@ -9,10 +9,11 @@ package mx.edu.j2se.perez.tasks;
  * @version     1.0 29 Nov 2021
  * @author      José Antonio Pérez Rodríguez
  */
-public class LinkedTaskList {
+public class LinkedTaskList extends AbstractTaskList {
     private Node firstNode;     //A pointer to the first element of the list
     private Node lastNode;      //A pointer to the last element of the list
     private boolean isEmpty;    //Attribute that indicates whether the list is empty
+    private int size;           // The size of the linked list
 
     /**
      * Constructor used to initialize the attributes of
@@ -22,6 +23,7 @@ public class LinkedTaskList {
         firstNode = null;
         lastNode = null;
         isEmpty = true;
+        size = 0;
     }
 
     /**
@@ -44,6 +46,7 @@ public class LinkedTaskList {
                 node.prevNode = lastNode;
                 lastNode = node;
             }
+            size++;
         }
     }
 
@@ -102,6 +105,13 @@ public class LinkedTaskList {
                 iterator = iterator.nextNode;
             }
         }
+        Node iterator = firstNode;
+        int counter = 0;
+        while (iterator != null) {
+            counter++;
+            iterator = iterator.nextNode;
+        }
+        size = counter;
         return isInTheList;
     }
 
@@ -110,13 +120,7 @@ public class LinkedTaskList {
      * @return the size of the tasks list
      */
     public int size() {
-        Node iterator = firstNode;
-        int counter = 0;
-        while (iterator != null) {
-            counter++;
-            iterator = iterator.nextNode;
-        }
-        return counter;
+        return size;
     }
 
     /**
@@ -166,18 +170,15 @@ public class LinkedTaskList {
                     "must be lower than the to parameter");
         } else {
             linkedList = new LinkedTaskList();
-            Node iterator = firstNode;
-            while (iterator != null) {
-                if ((iterator.task.nextTimeAfter(from) <= to) &&
-                        (iterator.task.nextTimeAfter(from) != -1)) {
-                    linkedList.add(iterator.task);
+            for (int i = 0; i < size; i++) {
+                if ((getTask(i).nextTimeAfter(from) <= to) &&
+                        (getTask(i).nextTimeAfter(from) != -1)) {
+                    linkedList.add(getTask(i));
                 }
-                iterator = iterator.nextNode;
             }
             return linkedList;
         }
     }
-
 
     /**
      * This inner class is used to represent the node

@@ -61,7 +61,7 @@ public class TaskTest {
     
     @Test
     public void testArrayTaskListMethods(){
-        Task taskR1 = new Task("Repetitive task 1", 4, 1, 2);
+        Task taskR1 = new Task("Repetitive task 1", 4, 5, 2);
         taskR1.setActive(true);
         Task taskR2 = new Task("Repetitive task 2", 1, 5, 2);
         taskR2.setActive(true);
