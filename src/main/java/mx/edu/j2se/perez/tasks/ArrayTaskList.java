@@ -12,7 +12,6 @@ package mx.edu.j2se.perez.tasks;
 public class ArrayTaskList extends AbstractTaskList {
 
     private Task[] taskArray;       //Structure used to storage the task objects
-    private int size;               //The size of the array
 
     /**
      * Constructor used to initialize the task list
@@ -94,14 +93,6 @@ public class ArrayTaskList extends AbstractTaskList {
         }
         size = taskArray.length;
         return isInTheList;
-    }
-
-    /**
-     * allows to obtain the size of the task list
-     * @return the size of the tasks list
-     */
-    public int size() {
-        return size;
     }
 
     /**

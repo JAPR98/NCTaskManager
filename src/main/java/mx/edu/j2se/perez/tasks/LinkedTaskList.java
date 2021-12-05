@@ -13,7 +13,6 @@ public class LinkedTaskList extends AbstractTaskList {
     private Node firstNode;     //A pointer to the first element of the list
     private Node lastNode;      //A pointer to the last element of the list
     private boolean isEmpty;    //Attribute that indicates whether the list is empty
-    private int size;           // The size of the linked list
 
     /**
      * Constructor used to initialize the attributes of
@@ -113,14 +112,6 @@ public class LinkedTaskList extends AbstractTaskList {
         }
         size = counter;
         return isInTheList;
-    }
-
-    /**
-     * allows to obtain the size of the task list
-     * @return the size of the tasks list
-     */
-    public int size() {
-        return size;
     }
 
     /**

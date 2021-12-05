@@ -1,7 +1,19 @@
 package mx.edu.j2se.perez.tasks;
 
+/**
+ * This class is intended to be a way to abstract
+ * the functionality of the AbstractTaskList and
+ * LinkedTaskList, declaring the methods whose
+ * functionality doesn't depend on the storage method
+ * of the task objects, and implementing those that
+ * do
+ *
+ * @version     1.0 3 Dic 2021
+ * @author      José Antonio Pérez Rodríguez
+ */
 public abstract class AbstractTaskList {
-    private int size;           //The size of the tasks store object
+
+    protected int size;           //The size of the tasks store object
 
     /**
      * adds the given task to the end of the tasks list
