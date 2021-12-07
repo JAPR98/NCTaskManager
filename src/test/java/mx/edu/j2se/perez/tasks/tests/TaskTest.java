@@ -1,8 +1,6 @@
 package mx.edu.j2se.perez.tasks.tests;
 
-import mx.edu.j2se.perez.tasks.ArrayTaskList;
-import mx.edu.j2se.perez.tasks.LinkedTaskList;
-import mx.edu.j2se.perez.tasks.Task;
+import mx.edu.j2se.perez.tasks.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -60,54 +58,39 @@ public class TaskTest {
     }
     
     @Test
-    public void testArrayTaskListMethods(){
-        Task taskR1 = new Task("Repetitive task 1", 4, 5, 2);
-        taskR1.setActive(true);
-        Task taskR2 = new Task("Repetitive task 2", 1, 5, 2);
-        taskR2.setActive(true);
-        Task taskNR1 = new Task("Non Repetitive task 1", 7);
-        taskNR1.setActive(true);
-        Task taskNR2 = new Task("Non Repetitive task 2", 2);
-        taskNR2.setActive(true);
-        ArrayTaskList array = new ArrayTaskList();
-        array.add(taskR1);
-        array.add(taskR1);
-        array.add(taskR2); //will stay after the remove method execution
-        array.add(taskNR1); //will stay after the remove method execution
-        array.add(taskR1);
-        array.add(taskNR2); //will stay after the remove method execution
-        Assert.assertEquals(array.size(),6);
-        array.remove(taskR1);
-        Assert.assertEquals(array.size(),3);
-        ArrayTaskList arrayTest = array.incoming(2,7);
-        Assert.assertEquals(arrayTest.size(), 2);
-        for (int i = 0; i < arrayTest.size(); i++){
-            System.out.println(arrayTest.getTask(i).getTitle());
-        }
-    }
-    @Test
-    public void testLinkedTaskListMethods(){
-        Task taskR1 = new Task("Repetitive task 1", 4, 5, 2);
-        taskR1.setActive(true);
-        Task taskR2 = new Task("Repetitive task 2", 1, 5, 2);
-        taskR2.setActive(true);
-        Task taskNR1 = new Task("Non Repetitive task 1", 7);
-        taskNR1.setActive(true);
-        Task taskNR2 = new Task("Non Repetitive task 2", 2);
-        taskNR2.setActive(true);
-        LinkedTaskList list = new LinkedTaskList();
-        list.add(taskR1);
-        list.add(taskR1);
-        list.add(taskR2); //will stay after the remove method execution
-        list.add(taskNR1); //will stay after the remove method execution
-        list.add(taskR1);
-        list.add(taskNR2); //will stay after the remove method execution
-        Assert.assertEquals(list.size(),6);
-        list.remove(taskR1);
-        Assert.assertEquals(list.size(),3);
-        LinkedTaskList listTest = list.incoming(2,7);
-        Assert.assertEquals(listTest.size(), 2);
-        System.out.println(listTest.getTask(0).getTitle());
-        System.out.println(listTest.getTask(1).getTitle());
+    public void testTaskListFactory(){
+        // Creating an LinkedTaskList
+        AbstractTaskList list1 = TaskListFactory.createTaskList(ListTypes.types.LINKED);
+        Assert.assertTrue(list1 instanceof LinkedTaskList);
+        Task task1 = new Task("Go to dinner", 5);
+        task1.setActive(true);
+        Task task2 = new Task("Go to sleep", 15);
+        task2.setActive(true);
+        Task task3 = new Task("Go to gim", 20);
+        task3.setActive(true);
+        list1.add(task1);
+        list1.add(task2);
+        list1.add(task3);
+        Assert.assertEquals(list1.size(),3);
+        Assert.assertEquals(list1.getTask(0),task1);
+        AbstractTaskList result1 = list1.incoming(4,18);
+        Assert.assertEquals(result1.size(), 2);
+
+        // Creating an ArrayTaskList
+        AbstractTaskList list2 = TaskListFactory.createTaskList(ListTypes.types.ARRAY);
+        Assert.assertTrue(list2 instanceof ArrayTaskList);
+        Task task4 = new Task("Go to dinner", 5);
+        task4.setActive(true);
+        Task task5 = new Task("Go to sleep", 15);
+        task5.setActive(true);
+        Task task6 = new Task("Go to gim", 20);
+        task6.setActive(true);
+        list2.add(task4);
+        list2.add(task5);
+        list2.add(task6);
+        Assert.assertEquals(list2.size(),3);
+        Assert.assertEquals(list2.getTask(0),task4);
+        AbstractTaskList result2 = list2.incoming(4,18);
+        Assert.assertEquals(result2.size(), 2);
     }
 }

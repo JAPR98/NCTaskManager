@@ -109,37 +109,5 @@ public class ArrayTaskList extends AbstractTaskList {
         }
         return taskArray[index];
     }
-
-    /**
-     * allows to obtain a subset from the tasks list, which is
-     * limited by the from and to parameters
-     * @param from the lower limit of task execution time allowed
-     * @param to the upper limit of task execution time allowed
-     * @return an ArrayList object that contains the subset of the
-     * tasks limited by the aforementioned parameters
-     * @throws IllegalArgumentException whether the to or from
-     *         parameter are lower than 0 or the from parameter is
-     *         greater or equal than the to parameter
-     */
-    public ArrayTaskList incoming(int from, int to) throws
-            IllegalArgumentException{
-        ArrayTaskList resultArray;
-        if ((from < 0) || (to < 0)) {
-            throw new IllegalArgumentException("from and to " +
-                    "parameters must be greater or equal than 0");
-        } else if (from >= to) {
-            throw new IllegalArgumentException("The from parameter " +
-                    "must be lower than the to parameter");
-        } else {
-            resultArray = new ArrayTaskList();
-            for (int i = 0; i < size; i++) {
-                if ((getTask(i).nextTimeAfter(from) <= to) &&
-                        (getTask(i).nextTimeAfter(from) != -1)) {
-                    resultArray.add(getTask(i));
-                }
-            }
-        }
-        return resultArray;
-    }
 }
 

@@ -69,9 +69,8 @@ public abstract class AbstractTaskList {
      *         parameter are lower than 0 or the from parameter is
      *         greater or equal than the to parameter
      */
-    /*
     public AbstractTaskList incoming(int from, int to) throws
-            IllegalArgumentException{
+            IllegalArgumentException {
         AbstractTaskList tasksObjectStore;
         if ((from < 0) || (to < 0)) {
             throw new IllegalArgumentException("from and to " +
@@ -80,8 +79,12 @@ public abstract class AbstractTaskList {
             throw new IllegalArgumentException("The from parameter " +
                     "must be lower than the to parameter");
         } else {
-            tasksObjectStore = new AbstractTaskList();
-            for (int i = 0; i < size; i++) {
+            if (this instanceof LinkedTaskList) {
+                tasksObjectStore = new LinkedTaskList();
+            } else {
+                tasksObjectStore = new ArrayTaskList();
+            }
+            for (int i = 0; i < this.size(); i++) {
                 if ((getTask(i).nextTimeAfter(from) <= to) &&
                         (getTask(i).nextTimeAfter(from) != -1)) {
                     tasksObjectStore.add(getTask(i));
@@ -90,5 +93,4 @@ public abstract class AbstractTaskList {
         }
         return tasksObjectStore;
     }
-    */
 }
