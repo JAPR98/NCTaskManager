@@ -75,6 +75,7 @@ public class TaskTest {
         Assert.assertEquals(list1.getTask(0),task1);
         AbstractTaskList result1 = list1.incoming(4,18);
         Assert.assertEquals(result1.size(), 2);
+        System.out.println(result1);
 
         // Creating an ArrayTaskList
         AbstractTaskList list2 = TaskListFactory.createTaskList(ListTypes.types.ARRAY);
@@ -92,5 +93,6 @@ public class TaskTest {
         Assert.assertEquals(list2.getTask(0),task4);
         AbstractTaskList result2 = list2.incoming(4,18);
         Assert.assertEquals(result2.size(), 2);
+        System.out.println(result2);
     }
 }

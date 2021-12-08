@@ -58,6 +58,14 @@ public abstract class AbstractTaskList {
      */
     public abstract Task getTask(int index) throws IndexOutOfBoundsException;
 
+
+    /**
+     * this method is used to create a new instance of the
+     * actual class, it is only used by the incoming method
+     * @return an instance of the actual class
+     */
+    protected abstract AbstractTaskList newListObject();
+
     /**
      * allows to obtain a subset from the tasks list, which is
      * limited by the from and to parameters
@@ -79,11 +87,7 @@ public abstract class AbstractTaskList {
             throw new IllegalArgumentException("The from parameter " +
                     "must be lower than the to parameter");
         } else {
-            if (this instanceof LinkedTaskList) {
-                tasksObjectStore = new LinkedTaskList();
-            } else {
-                tasksObjectStore = new ArrayTaskList();
-            }
+            tasksObjectStore = newListObject();
             for (int i = 0; i < this.size(); i++) {
                 if ((getTask(i).nextTimeAfter(from) <= to) &&
                         (getTask(i).nextTimeAfter(from) != -1)) {

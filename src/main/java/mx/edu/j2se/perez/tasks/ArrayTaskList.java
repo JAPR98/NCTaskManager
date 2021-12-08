@@ -1,5 +1,7 @@
 package mx.edu.j2se.perez.tasks;
 
+import com.sun.org.apache.bcel.internal.generic.ANEWARRAY;
+
 /**
  * This class is intended to be a storage of Task
  * objects, using arrays to store the objects and
@@ -93,6 +95,15 @@ public class ArrayTaskList extends AbstractTaskList {
         }
         size = taskArray.length;
         return isInTheList;
+    }
+
+    /**
+     * this method is used to create a new instance of the
+     * actual class, it is only used by the incoming method
+     * @return an instance of the actual class
+     */
+    protected AbstractTaskList newListObject() {
+        return new ArrayTaskList();
     }
 
     /**

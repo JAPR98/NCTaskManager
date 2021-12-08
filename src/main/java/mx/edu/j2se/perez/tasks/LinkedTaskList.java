@@ -140,6 +140,15 @@ public class LinkedTaskList extends AbstractTaskList {
     }
 
     /**
+     * this method is used to create a new instance of the
+     * actual class, it is only used by the incoming method
+     * @return an instance of the actual class
+     */
+    protected AbstractTaskList newListObject() {
+        return new LinkedTaskList();
+    }
+
+    /**
      * This inner class is used to represent the node
      * object to be stored in the LinkedTaskList,
      * each one of the nodes has a reference to its next
