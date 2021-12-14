@@ -58,7 +58,7 @@ public class TaskTest {
     }
     
     @Test
-    public void testTaskListFactory(){
+    public void testMethods(){
         // Creating an LinkedTaskList
         AbstractTaskList list1 = TaskListFactory.createTaskList(ListTypes.types.LINKED);
         Assert.assertTrue(list1 instanceof LinkedTaskList);
@@ -75,7 +75,13 @@ public class TaskTest {
         Assert.assertEquals(list1.getTask(0),task1);
         AbstractTaskList result1 = list1.incoming(4,18);
         Assert.assertEquals(result1.size(), 2);
-        System.out.println(result1);
+        System.out.println(list1);
+        System.out.println(list1.hashCode());
+        for (Task t: list1) {
+            System.out.println(t);
+        }
+        LinkedTaskList list1C = (LinkedTaskList) list1.clone();
+        Assert.assertTrue(list1.equals(list1C));
 
         // Creating an ArrayTaskList
         AbstractTaskList list2 = TaskListFactory.createTaskList(ListTypes.types.ARRAY);
@@ -93,6 +99,13 @@ public class TaskTest {
         Assert.assertEquals(list2.getTask(0),task4);
         AbstractTaskList result2 = list2.incoming(4,18);
         Assert.assertEquals(result2.size(), 2);
-        System.out.println(result2);
+        System.out.println(list2);
+        System.out.println(list2.hashCode());
+        for (Task t: list1) {
+            System.out.println(t);
+        }
+        ArrayTaskList list2C = (ArrayTaskList) list2.clone();
+        Assert.assertTrue(list2.equals(list2C));
+
     }
 }

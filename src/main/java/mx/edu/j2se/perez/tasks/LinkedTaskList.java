@@ -254,7 +254,5 @@ public class LinkedTaskList extends AbstractTaskList {
             nextNode = null;
             prevNode = null;
         }
-
-
     }
 }

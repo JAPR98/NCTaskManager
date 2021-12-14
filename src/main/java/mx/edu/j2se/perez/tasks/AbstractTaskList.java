@@ -11,7 +11,7 @@ package mx.edu.j2se.perez.tasks;
  * @version     1.0 3 Dic 2021
  * @author      José Antonio Pérez Rodríguez
  */
-public abstract class AbstractTaskList implements Iterable<Task> {
+public abstract class AbstractTaskList implements Iterable<Task>, Cloneable {
 
     protected int size;           //The size of the tasks store object
 
@@ -96,5 +96,19 @@ public abstract class AbstractTaskList implements Iterable<Task> {
             }
         }
         return tasksObjectStore;
+    }
+
+    /**
+     * Allows to create a clone of the current object
+     * @return the clone of the current object
+     */
+    @Override
+    public Object clone() {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            System.out.println("Operation not supported");
+        }
+        return null;
     }
 }

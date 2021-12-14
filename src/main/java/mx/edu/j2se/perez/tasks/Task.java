@@ -12,7 +12,7 @@ import java.util.Objects;
  * @version     2.0 22 Nov 2021
  * @author      José Antonio Pérez Rodríguez
  */
-public class Task {
+public class Task implements Cloneable {
 
     private String title;           // task name
     private int time;               // non-repetitive execution time
@@ -320,6 +320,7 @@ public class Task {
      * activeStatus
      * @return the String representation of the object
      */
+
     @Override
     public String toString() {
         if (this.isRepetitive) {
@@ -328,5 +329,21 @@ public class Task {
         } else {
             return this.title+" "+this.time+" "+this.isActive;
         }
+    }
+
+    /**
+     * Allows to create a clone of the current object
+     * @return the clone of the current object
+     * @return null whether the operation is not defined
+     */
+    @Override
+    public Object clone() {
+        try {
+            Task taskCloned = (Task)super.clone();
+            return taskCloned;
+        } catch (CloneNotSupportedException e) {
+            System.out.println("Operation not supported");
+        }
+        return null;
     }
 }
