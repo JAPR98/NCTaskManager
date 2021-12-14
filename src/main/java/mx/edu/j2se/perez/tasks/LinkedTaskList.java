@@ -1,4 +1,7 @@
 package mx.edu.j2se.perez.tasks;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * This class is intended to be a storage of Task
@@ -149,6 +152,83 @@ public class LinkedTaskList extends AbstractTaskList {
     }
 
     /**
+     * This method allows iterating the class
+     * @return an iterator object that can be used
+     * to iterate over the class instance
+     * @throws IndexOutOfBoundsException whether the
+     * iterator has no more items to iterate over
+     */
+    @Override
+    public Iterator<Task> iterator() throws IndexOutOfBoundsException{
+        return new Iterator<Task>() {
+            private Node iterator = null;
+
+            @Override
+            public boolean hasNext() {
+                if ((iterator == null) && (size() != 0)) {
+                    return true;
+                } else return (iterator != null) &&
+                        (iterator.nextNode != null);
+            }
+            @Override
+            public Task next() {
+                if (hasNext()) {
+                    if ((iterator == null) && (size() > 0)) {
+                        iterator = firstNode;
+                    } else iterator = iterator.nextNode;
+                } else {
+                    throw new IndexOutOfBoundsException("The list has " +
+                            "no more tasks");
+                }
+
+                return iterator.task;
+            }
+        };
+    }
+
+    /**
+     * allows comparing whether two LinkedTaskList objects are the same
+     * @param obj the object to be compared against the current object
+     * @return whether the object is equal to the current object, returns
+     * true, otherwise returns false
+     */
+    @Override
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if ((obj instanceof LinkedTaskList)) {
+            LinkedTaskList listObj = (LinkedTaskList) obj;
+            if (this.size() == listObj.size()) {
+                for (int i = 0; i < this.size(); i++) {
+                    if (!this.getTask(i).equals(listObj.getTask(i))) {
+                        return result;
+                    }
+                }
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * This method allows to obtain the hash value of the object
+     * @return the hash value of the object
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstNode.task.hashCode(),
+                lastNode.task.hashCode(), size);
+    }
+
+    /**
+     * Allows to represent the current object as a String
+     * @return the String representation of the object
+     */
+    @Override
+    public String toString() {
+        return "LinkedTaskList array, "+this.size()+" elements";
+    }
+
+    /**
      * This inner class is used to represent the node
      * object to be stored in the LinkedTaskList,
      * each one of the nodes has a reference to its next
@@ -174,5 +254,7 @@ public class LinkedTaskList extends AbstractTaskList {
             nextNode = null;
             prevNode = null;
         }
+
+
     }
 }

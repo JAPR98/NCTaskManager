@@ -1,5 +1,7 @@
 package mx.edu.j2se.perez.tasks;
 
+import java.util.Objects;
+
 /**
  * This class aims to create events called tasks as a
  * reminder for a user, these tasks can be repetitive
@@ -38,6 +40,9 @@ public class Task {
         } else {
             this.title = title;
             this.time = time;
+            this.start = 0;
+            this.end = 0;
+            this.interval = 0;
             this.isActive = false;
             this.isRepetitive = false;
         }
@@ -70,6 +75,7 @@ public class Task {
                     "be greater than 0");
         } else {
             this.title = title;
+            this.time = 0;
             this.start = start;
             this.end = end;
             this.interval = interval;
@@ -295,5 +301,32 @@ public class Task {
             }
         }
         return result;
+    }
+
+    /**
+     * This method allows to obtain the hash value of the object
+     * @return the hash value of the object
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, time, start, end, interval, isActive,
+                isRepetitive);
+    }
+
+    /**
+     * Allows to represent the current object as a String, whether the
+     * task is repetitive its string format will be: title startTime endTime
+     * interval activeStatus, otherwise the format will be: title executionTime
+     * activeStatus
+     * @return the String representation of the object
+     */
+    @Override
+    public String toString() {
+        if (this.isRepetitive) {
+            return this.title+" "+this.start+" "+this.end+" "+this.interval+" "+
+                    this.isActive+" ";
+        } else {
+            return this.title+" "+this.time+" "+this.isActive;
+        }
     }
 }

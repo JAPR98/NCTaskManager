@@ -1,6 +1,7 @@
 package mx.edu.j2se.perez.tasks;
-
-import com.sun.org.apache.bcel.internal.generic.ANEWARRAY;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * This class is intended to be a storage of Task
@@ -119,6 +120,74 @@ public class ArrayTaskList extends AbstractTaskList {
             throw new IndexOutOfBoundsException();
         }
         return taskArray[index];
+    }
+
+    /**
+     * This method allows the class to be iterated
+     * @return an iterator object that can be used
+     * to iterate over the class instance
+     * @throws IndexOutOfBoundsException whether the
+     * iterator has no more items to iterate over
+     */
+    @Override
+    public Iterator<Task> iterator() throws IndexOutOfBoundsException{
+        return new Iterator<Task>() {
+            private int position = 0;
+            @Override
+            public boolean hasNext() {
+                return position < size();
+            }
+            @Override
+            public Task next() {
+                if (!hasNext()) {
+                    throw new IndexOutOfBoundsException("The list has " +
+                            "no more tasks");
+                } else {
+                    return taskArray[position++];
+                }
+            }
+        };
+    }
+
+    /**
+     * allows comparing whether two ArrayTaskList objects are the same
+     * @param obj the object to be compared against the current object
+     * @return whether the object is equal to the current object, returns
+     * true, otherwise returns false
+     */
+    @Override
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if ((obj instanceof ArrayTaskList)) {
+            ArrayTaskList arrayObj = (ArrayTaskList) obj;
+            if (this.size() == arrayObj.size()) {
+                  for (int i = 0; i < this.size(); i++) {
+                      if (!this.getTask(i).equals(arrayObj.getTask(i))) {
+                          return result;
+                      }
+                  }
+                  result = true;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * This method allows to obtain the hash value of the object
+     * @return the hash value of the object
+     */
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(taskArray);
+    }
+
+    /**
+     * Allows to represent the current object as a String
+     * @return the String representation of the object
+     */
+    @Override
+    public String toString() {
+       return "ArrayTaskList array, "+this.size()+" elements";
     }
 }
 

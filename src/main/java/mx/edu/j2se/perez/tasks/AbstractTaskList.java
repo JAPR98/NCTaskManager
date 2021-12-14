@@ -11,7 +11,7 @@ package mx.edu.j2se.perez.tasks;
  * @version     1.0 3 Dic 2021
  * @author      José Antonio Pérez Rodríguez
  */
-public abstract class AbstractTaskList {
+public abstract class AbstractTaskList implements Iterable<Task> {
 
     protected int size;           //The size of the tasks store object
 
