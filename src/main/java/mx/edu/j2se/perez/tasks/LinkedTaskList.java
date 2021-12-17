@@ -118,6 +118,18 @@ public class LinkedTaskList extends AbstractTaskList {
     }
 
     /**
+     * Allows to eliminate all the tasks inside the
+     * current object
+     */
+    @Override
+    public void clear() {
+        firstNode = null;
+        lastNode = null;
+        isEmpty = true;
+        size = 0;
+    }
+
+    /**
      * allows to obtain a task from the tasks list using
      * the given index
      * @param index the index of the task

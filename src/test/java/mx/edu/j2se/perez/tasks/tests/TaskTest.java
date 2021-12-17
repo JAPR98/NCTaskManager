@@ -104,7 +104,7 @@ public class TaskTest {
         for (Task t: list1) {
             System.out.println(t);
         }
-        ArrayTaskList list2C = (ArrayTaskList) list2.clone();
+        AbstractTaskList list2C = list2.clone();
         Assert.assertTrue(list2.equals(list2C));
 
     }

@@ -320,7 +320,6 @@ public class Task implements Cloneable {
      * activeStatus
      * @return the String representation of the object
      */
-
     @Override
     public String toString() {
         if (this.isRepetitive) {
@@ -337,7 +336,7 @@ public class Task implements Cloneable {
      * @return null whether the operation is not defined
      */
     @Override
-    public Object clone() {
+    public Task clone() {
         try {
             Task taskCloned = (Task)super.clone();
             return taskCloned;

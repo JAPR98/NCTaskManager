@@ -11,7 +11,7 @@ package mx.edu.j2se.perez.tasks;
  * @version     1.0 3 Dic 2021
  * @author      José Antonio Pérez Rodríguez
  */
-public abstract class AbstractTaskList implements Iterable<Task>, Cloneable {
+public abstract class AbstractTaskList implements Cloneable, Iterable<Task> {
 
     protected int size;           //The size of the tasks store object
 
@@ -38,6 +38,12 @@ public abstract class AbstractTaskList implements Iterable<Task>, Cloneable {
      */
     public abstract boolean remove(Task task) throws IllegalArgumentException,
             RuntimeException;
+
+    /**
+     * Allows to eliminate all the tasks inside the
+     * current object
+     */
+    public abstract void clear();
 
     /**
      * allows to obtain the size of the tasks store
@@ -103,9 +109,15 @@ public abstract class AbstractTaskList implements Iterable<Task>, Cloneable {
      * @return the clone of the current object
      */
     @Override
-    public Object clone() {
+    public AbstractTaskList clone() {
         try {
-            return super.clone();
+            AbstractTaskList list = (AbstractTaskList)
+                    super.clone();
+            list.clear();
+            for (int i = 0; i < this.size(); i++) {
+               list.add(getTask(i).clone());
+            }
+            return list;
         } catch (CloneNotSupportedException e) {
             System.out.println("Operation not supported");
         }

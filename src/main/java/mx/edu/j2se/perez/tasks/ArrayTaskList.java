@@ -13,7 +13,7 @@ import java.util.Objects;
  * @version     2.0 29 Nov 2021
  * @author      José Antonio Pérez Rodríguez
  */
-public class ArrayTaskList extends AbstractTaskList {
+public class ArrayTaskList  extends AbstractTaskList{
 
     private Task[] taskArray;       //Structure used to storage the task objects
 
@@ -100,6 +100,16 @@ public class ArrayTaskList extends AbstractTaskList {
     }
 
     /**
+     * Allows to eliminate all the tasks inside the
+     * current object
+     */
+    @Override
+    public void clear() {
+        taskArray = new Task[0];
+        size = 0;
+    }
+
+    /**
      * this method is used to create a new instance of the
      * actual class, it is only used by the incoming method
      * @return an instance of the actual class
@@ -164,7 +174,7 @@ public class ArrayTaskList extends AbstractTaskList {
             if (this.size() == arrayObj.size()) {
                   for (int i = 0; i < this.size(); i++) {
                       if (!this.getTask(i).equals(arrayObj.getTask(i))) {
-                          return result;
+                          return false;
                       }
                   }
                   result = true;
@@ -190,5 +200,6 @@ public class ArrayTaskList extends AbstractTaskList {
     public String toString() {
        return "ArrayTaskList array, "+this.size()+" elements";
     }
+
 }
 
