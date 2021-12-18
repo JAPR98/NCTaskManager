@@ -111,15 +111,6 @@ public class ArrayTaskList  extends AbstractTaskList{
     }
 
     /**
-     * this method is used to create a new instance of the
-     * actual class, it is only used by the incoming method
-     * @return an instance of the actual class
-     */
-    protected AbstractTaskList newListObject() {
-        return new ArrayTaskList();
-    }
-
-    /**
      * allows to obtain a task from the tasks list using
      * the given index
      * @param index the index of the task

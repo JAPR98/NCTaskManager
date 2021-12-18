@@ -14,5 +14,8 @@ public class Main {
 		array1.add(task2);
 		array1.add(task3);
 		array1.getStream().filter(Task::isActive).forEach(System.out::println);
+		for (Task t: array1) {
+			System.out.println(t);
+		}
 	}
 }

@@ -65,14 +65,6 @@ public abstract class AbstractTaskList implements Cloneable, Iterable<Task> {
      */
     public abstract Task getTask(int index) throws IndexOutOfBoundsException;
 
-
-    /**
-     * this method is used to create a new instance of the
-     * actual class, it is only used by the incoming method
-     * @return an instance of the actual class
-     */
-    protected abstract AbstractTaskList newListObject();
-
     /**
      * allows to obtain a subset from the tasks list, which is
      * limited by the from and to parameters
@@ -84,7 +76,7 @@ public abstract class AbstractTaskList implements Cloneable, Iterable<Task> {
      *         parameter are lower than 0 or the from parameter is
      *         greater or equal than the to parameter
      */
-    public final AbstractTaskList incoming(int from, int to) throws
+    public final Stream<Task> incoming(int from, int to) throws
             IllegalArgumentException {
         AbstractTaskList tasksObjectStore;
         if ((from < 0) || (to < 0)) {
@@ -94,15 +86,10 @@ public abstract class AbstractTaskList implements Cloneable, Iterable<Task> {
             throw new IllegalArgumentException("The from parameter " +
                     "must be lower than the to parameter");
         } else {
-            tasksObjectStore = newListObject();
-            for (int i = 0; i < this.size(); i++) {
-                if ((getTask(i).nextTimeAfter(from) <= to) &&
-                        (getTask(i).nextTimeAfter(from) != -1)) {
-                    tasksObjectStore.add(getTask(i));
-                }
-            }
+             return  getStream()
+                    .filter(t -> t.nextTimeAfter(from) < to &&
+                            t.nextTimeAfter(from) != -1);
         }
-        return tasksObjectStore;
     }
 
     /**

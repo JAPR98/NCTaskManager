@@ -4,6 +4,8 @@ import mx.edu.j2se.perez.tasks.*;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.stream.Stream;
+
 public class TaskTest {
 
     @Test
@@ -73,15 +75,8 @@ public class TaskTest {
         list1.add(task3);
         Assert.assertEquals(list1.size(),3);
         Assert.assertEquals(list1.getTask(0),task1);
-        AbstractTaskList result1 = list1.incoming(4,18);
-        Assert.assertEquals(result1.size(), 2);
-        System.out.println(list1);
-        System.out.println(list1.hashCode());
-        for (Task t: list1) {
-            System.out.println(t);
-        }
-        LinkedTaskList list1C = (LinkedTaskList) list1.clone();
-        Assert.assertTrue(list1.equals(list1C));
+        Stream<Task> result1 = list1.incoming(4,18);
+        Assert.assertEquals(result1.count(),2);
 
         // Creating an ArrayTaskList
         AbstractTaskList list2 = TaskListFactory.createTaskList(ListTypes.types.ARRAY);
@@ -97,15 +92,7 @@ public class TaskTest {
         list2.add(task6);
         Assert.assertEquals(list2.size(),3);
         Assert.assertEquals(list2.getTask(0),task4);
-        AbstractTaskList result2 = list2.incoming(4,18);
-        Assert.assertEquals(result2.size(), 2);
-        System.out.println(list2);
-        System.out.println(list2.hashCode());
-        for (Task t: list1) {
-            System.out.println(t);
-        }
-        AbstractTaskList list2C = list2.clone();
-        Assert.assertTrue(list2.equals(list2C));
-
+        Stream<Task> result2 = list2.incoming(4,18);
+        Assert.assertEquals(result2.count(),2);
     }
 }
