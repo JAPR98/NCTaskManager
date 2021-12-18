@@ -3,6 +3,7 @@ import javax.naming.OperationNotSupportedException;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * This class is intended to be a storage of Task
@@ -198,8 +199,18 @@ public class ArrayTaskList  extends AbstractTaskList{
      */
     @Override
     public String toString() {
-       return "ArrayTaskList array, "+this.size()+" elements";
+       return "ArrayTaskList array, "
+               +this.size()+" elements";
     }
 
+    /**
+     * This method allows working with collections as with
+     * Streams
+     * @return a Stream of tasks
+     */
+    @Override
+    public Stream<Task> getStream() {
+        return Arrays.stream(taskArray);
+    }
 }
 

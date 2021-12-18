@@ -2,6 +2,7 @@ package mx.edu.j2se.perez.tasks;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * This class is intended to be a storage of Task
@@ -237,7 +238,20 @@ public class LinkedTaskList extends AbstractTaskList {
      */
     @Override
     public String toString() {
-        return "LinkedTaskList array, "+this.size()+" elements";
+        return "LinkedTaskList array, "+this.size()+
+                " elements";
+    }
+
+    /**
+     * This method allows working with collections as with
+     * Streams
+     * @return a Stream of tasks
+     */
+    @Override
+    public Stream<Task> getStream() {
+        Node iterator = firstNode;
+        return Stream.iterate(iterator, n -> n.nextNode)
+                .limit(size).map(t -> t.task);
     }
 
     /**

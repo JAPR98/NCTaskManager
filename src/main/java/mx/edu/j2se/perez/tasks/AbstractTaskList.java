@@ -1,4 +1,5 @@
 package mx.edu.j2se.perez.tasks;
+import java.util.stream.Stream;
 
 /**
  * This class is intended to be a way to abstract
@@ -83,7 +84,7 @@ public abstract class AbstractTaskList implements Cloneable, Iterable<Task> {
      *         parameter are lower than 0 or the from parameter is
      *         greater or equal than the to parameter
      */
-    public AbstractTaskList incoming(int from, int to) throws
+    public final AbstractTaskList incoming(int from, int to) throws
             IllegalArgumentException {
         AbstractTaskList tasksObjectStore;
         if ((from < 0) || (to < 0)) {
@@ -123,4 +124,11 @@ public abstract class AbstractTaskList implements Cloneable, Iterable<Task> {
         }
         return null;
     }
+
+    /**
+     * This method allows working with collections as with
+     * Streams
+     * @return a Stream of tasks
+     */
+    abstract public Stream<Task> getStream();
 }
