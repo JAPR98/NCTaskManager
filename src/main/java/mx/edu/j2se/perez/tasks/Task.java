@@ -1,5 +1,5 @@
 package mx.edu.j2se.perez.tasks;
-
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -15,9 +15,9 @@ import java.util.Objects;
 public class Task implements Cloneable {
 
     private String title;           // task name
-    private int time;               // non-repetitive execution time
-    private int start;              // repetitive task start time
-    private int end;                // repetitive task end time
+    private LocalDateTime time;               // non-repetitive execution time
+    private LocalDateTime start;              // repetitive task start time
+    private LocalDateTime end;                // repetitive task end time
     private int interval;           // repetitive task execution interval
     private boolean isActive;       // indicates if the task is gona be executed
     private boolean isRepetitive;   // repetitive state of the task
@@ -27,21 +27,21 @@ public class Task implements Cloneable {
      * @param title task name
      * @param time task execution time
      * @throws IllegalArgumentException whether the title is null or the given
-     *         time is lower than 0
+     *         time is null
      */
-    public Task(String title, int time) throws
+    public Task(String title, LocalDateTime time) throws
             IllegalArgumentException {
         if (title == null) {
             throw new IllegalArgumentException("The title " +
                     "mustn´t be null");
-        } else if (time < 0){
-            throw new IllegalArgumentException("The time " +
-                    "mustn´t be lower than 0");
+        } else if ( time == null ) {
+            throw new IllegalArgumentException("The time of " +
+                    "excecution mustn't be null");
         } else {
             this.title = title;
             this.time = time;
-            this.start = 0;
-            this.end = 0;
+            this.start = null;
+            this.end = null;
             this.interval = 0;
             this.isActive = false;
             this.isRepetitive = false;
@@ -55,27 +55,28 @@ public class Task implements Cloneable {
      * @param end time at which the task repetition ends
      * @param interval task repetition time
      * @throws IllegalArgumentException whether the title is null, the
-     *         start or end time are lower than 0, the start time is
+     *         start or end time are null, the start time is
      *         greater than or equal to end time or the interval is lower
      *         than 1
      */
-    public Task(String title, int start, int end, int interval) throws
+    public Task(String title, LocalDateTime start,
+                LocalDateTime end, int interval) throws
             IllegalArgumentException{
         if (title == null) {
             throw new IllegalArgumentException("The title mustn´t " +
                     "be null");
-        } else if ((start < 0) || (end < 0)) {
+        } else if ( start == null || end == null){
             throw new IllegalArgumentException("The start and end " +
-                    "time must be equal or greather than 0");
-        } else if (start >= end) {
+                    "time mustn´t be null");
+        } else if ( start.isAfter(end) || start.isEqual(end)) {
             throw new IllegalArgumentException("The end time must " +
                     "be greater than star time");
-        } else if (interval < 1){
+        } else if ( interval < 1){
             throw new IllegalArgumentException("The interval must " +
                     "be greater than 0");
         } else {
             this.title = title;
-            this.time = 0;
+            this.time = null;
             this.start = start;
             this.end = end;
             this.interval = interval;
@@ -123,7 +124,7 @@ public class Task implements Cloneable {
      * @return start time of execution whether is a repetitive one
      *         time of execution if is not
      */
-    public int getTime(){
+    public LocalDateTime getTime(){
         if (this.isRepetitive) {
             return this.start;
         } else {
@@ -137,17 +138,17 @@ public class Task implements Cloneable {
      * one if is not, and set the execution time as well
      * @param time task execution time
      * @throws IllegalArgumentException whether the given time is
-     *         lower than 0
+     *         null
      */
-    public void setTime(int time) throws IllegalArgumentException{
-        if (time < 0) {
-            throw new IllegalArgumentException("The time mustn´t" +
-                    "be lower than 0");
+    public void setTime(LocalDateTime time) throws IllegalArgumentException{
+        if ( time == null) {
+            throw new IllegalArgumentException("The excecution time mustn't " +
+                    "be null");
         } else {
             if (this.isRepetitive) {
                 this.isRepetitive = false;
-                this.start = 0;
-                this.end = 0;
+                this.start = null;
+                this.end = null;
                 this.interval = 0;
             }
             this.time = time;
@@ -160,7 +161,7 @@ public class Task implements Cloneable {
      *         task execution start time, if is not, returns the
      *         execution time
      */
-    public int getStartTime() {
+    public LocalDateTime getStartTime() {
         if (this.isRepetitive) {
             return this.start;
         } else {
@@ -174,7 +175,7 @@ public class Task implements Cloneable {
      *         task execution end time, if is not, returns the
      *         execution time
      */
-    public int getEndTime() {
+    public LocalDateTime getEndTime() {
         if (this.isRepetitive) {
             return this.end;
         } else {
@@ -204,15 +205,15 @@ public class Task implements Cloneable {
      * @param end time at which the task repetition ends
      * @param interval task repetition time
      * @throws IllegalArgumentException whether the start or end time are
-     *         lower than 0, the start time is greater than or equal to
+     *         null, the start time is greater than or equal to
      *         end time or the interval is lower than 1
      */
-    public void setTime(int start, int end, int interval) throws
+    public void setTime(LocalDateTime start, LocalDateTime end, int interval) throws
             IllegalArgumentException{
-        if ((start < 0) || (end < 0)) {
+        if ( start == null || end == null){
             throw new IllegalArgumentException("The start and end " +
-                    "time must be equal or greather than 0");
-        } else if (start >= end) {
+                    "time mustn´t be null");
+        } else if (start.isAfter(end) || start.isEqual(end)) {
             throw new IllegalArgumentException("The end time must " +
                     "be greater than star time");
         } else if (interval < 1){
@@ -225,7 +226,7 @@ public class Task implements Cloneable {
                 this.interval = interval;
             } else {
                 this.isRepetitive = true;
-                this.time = 0;
+                this.time = null;
                 this.start = start;
                 this.end = end;
                 this.interval = interval;
@@ -249,30 +250,34 @@ public class Task implements Cloneable {
      *         next start time of the task execution after the current time
      * @throws IllegalArgumentException wether the current time is lower than 0
      */
-    public int nextTimeAfter(int current) throws IllegalArgumentException{
-        if (current < 0) {
-            throw new IllegalArgumentException("The current time must " +
-                    "be equal or greater than 0");
+    public LocalDateTime nextTimeAfter(LocalDateTime current) throws
+            IllegalArgumentException{
+        if ( current == null) {
+            throw new IllegalArgumentException("The current time " +
+                    "mustn't be null");
         } else {
-            if (!this.isActive) {
-                return -1;
+            if (!isActive) {
+                return null;
             }
-            if (!this.isRepetitive){
-                int execTime = (this.time > current) ? this.time : -1;
+            if (!isRepetitive){
+                LocalDateTime execTime = time.isAfter(current) ? time : null;
                 return execTime;
             } else {
-                if (this.start > current) {
-                    return this.start;
-                }
-                for (int i = this.start; i <= (this.end - this.interval);
-                     i += this.interval) {
-                    if (current < (i + this.interval)) {
-                        return (i + this.interval);
+                if (start.isAfter(current)) {
+                    return start;
+                } else {
+                    int aux = 1;
+                    while (start.plusHours(interval * aux).isBefore(end)) {
+                        if (current.isBefore(start.plusHours(interval * aux)) &&
+                                start.plusHours(interval * aux).isBefore(end)) {
+                            return start.plusHours(interval * aux);
+                        }
+                        aux++;
                     }
                 }
             }
         }
-        return -1;
+        return null;
     }
 
     /**
@@ -287,15 +292,15 @@ public class Task implements Cloneable {
         if ((obj != null) && (obj instanceof Task)) {
             Task taskObj = (Task)obj;
             if (taskObj.isRepeated()) {
-                if (this.title.equals(taskObj.getTitle()) &&
-                        (this.start == taskObj.getStartTime()) &&
-                        (this.end == taskObj.getEndTime()) &&
-                        (this.interval == taskObj.getRepeatInterval())) {
+                if (title.equals(taskObj.getTitle()) &&
+                        start.isEqual(taskObj.getStartTime()) &&
+                        end.isEqual(taskObj.getEndTime()) &&
+                        interval == taskObj.getRepeatInterval()) {
                     result = true;
                 }
             } else {
-                if (this.title.equals(taskObj.getTitle()) &&
-                        (this.time == taskObj.getTime())) {
+                if (title.equals(taskObj.getTitle()) &&
+                        time.isEqual(taskObj.getTime())) {
                     result = true;
                 }
             }
@@ -323,10 +328,12 @@ public class Task implements Cloneable {
     @Override
     public String toString() {
         if (this.isRepetitive) {
-            return this.title+" "+this.start+" "+this.end+" "+this.interval+" "+
-                    this.isActive+" ";
+            return "Title: "+this.title+"\nStart: "+
+                    this.start+"\nEnd: "+ this.end+"\nInterval: "+
+                    this.interval+"\nActive: "+ this.isActive+"\n";
         } else {
-            return this.title+" "+this.time+" "+this.isActive;
+            return "Title: "+this.title+"\nTime: "+this.time+"\nActive: "+
+                    this.isActive+"\n";
         }
     }
 

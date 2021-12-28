@@ -1,7 +1,7 @@
 package mx.edu.j2se.perez.tasks;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
@@ -219,8 +219,13 @@ public class LinkedTaskList extends AbstractTaskList {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(firstNode.task.hashCode(),
-                lastNode.task.hashCode(), size);
+        ArrayList array = new ArrayList();
+        Node it = firstNode;
+        while (it != null) {
+            array.add(it.task);
+            it = it.nextNode;
+        }
+        return Arrays.hashCode(array.toArray());
     }
 
     /**
@@ -240,9 +245,13 @@ public class LinkedTaskList extends AbstractTaskList {
      */
     @Override
     public Stream<Task> getStream() {
-        Node iterator = firstNode;
-        return Stream.iterate(iterator, n -> n.nextNode)
-                .limit(size).map(t -> t.task);
+        Node it = firstNode;
+        Stream.Builder<Task> builder = Stream.builder();
+        while (it != null) {
+            builder.add(it.task);
+            it = it.nextNode;
+        }
+        return builder.build();
     }
 
     /**

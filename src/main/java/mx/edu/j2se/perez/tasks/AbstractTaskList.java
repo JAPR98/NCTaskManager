@@ -65,32 +65,6 @@ public abstract class AbstractTaskList implements Cloneable, Iterable<Task> {
      */
     public abstract Task getTask(int index) throws IndexOutOfBoundsException;
 
-    /**
-     * allows to obtain a subset from the tasks list, which is
-     * limited by the from and to parameters
-     * @param from the lower limit of task execution time allowed
-     * @param to the upper limit of task execution time allowed
-     * @return an AbstractTaskList object that contains the subset
-     *         of the tasks limited by the aforementioned parameters
-     * @throws IllegalArgumentException whether the to or from
-     *         parameter are lower than 0 or the from parameter is
-     *         greater or equal than the to parameter
-     */
-    public final Stream<Task> incoming(int from, int to) throws
-            IllegalArgumentException {
-        AbstractTaskList tasksObjectStore;
-        if ((from < 0) || (to < 0)) {
-            throw new IllegalArgumentException("from and to " +
-                    "parameters must be greater or equal than 0");
-        } else if (from >= to) {
-            throw new IllegalArgumentException("The from parameter " +
-                    "must be lower than the to parameter");
-        } else {
-             return  getStream()
-                    .filter(t -> t.nextTimeAfter(from) < to &&
-                            t.nextTimeAfter(from) != -1);
-        }
-    }
 
     /**
      * Allows to create a clone of the current object
