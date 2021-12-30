@@ -266,13 +266,13 @@ public class Task implements Cloneable {
                 if (start.isAfter(current)) {
                     return start;
                 } else {
-                    int aux = 1;
-                    while (start.plusHours(interval * aux).isBefore(end)) {
-                        if (current.isBefore(start.plusHours(interval * aux)) &&
-                                start.plusHours(interval * aux).isBefore(end)) {
-                            return start.plusHours(interval * aux);
+                    LocalDateTime increasing = start;
+                    while (end.isAfter(increasing)) {
+                        increasing = increasing.plusHours(interval);
+                        if (current.isBefore(increasing) &&
+                                (end.isAfter(increasing) || end.isEqual(increasing))) {
+                            return increasing;
                         }
-                        aux++;
                     }
                 }
             }
