@@ -1,4 +1,5 @@
 package mx.edu.j2se.perez.tasks;
+import java.io.Serializable;
 import java.util.stream.Stream;
 
 /**
@@ -12,7 +13,7 @@ import java.util.stream.Stream;
  * @version     1.0 3 Dic 2021
  * @author      José Antonio Pérez Rodríguez
  */
-public abstract class AbstractTaskList implements Cloneable, Iterable<Task> {
+public abstract class AbstractTaskList implements Cloneable, Iterable<Task>, Serializable {
 
     protected int size;           //The size of the tasks store object
 

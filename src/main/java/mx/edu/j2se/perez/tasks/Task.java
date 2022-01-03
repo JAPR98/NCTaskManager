@@ -1,4 +1,5 @@
 package mx.edu.j2se.perez.tasks;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -12,7 +13,7 @@ import java.util.Objects;
  * @version     2.0 22 Nov 2021
  * @author      José Antonio Pérez Rodríguez
  */
-public class Task implements Cloneable {
+public class Task implements Cloneable, Serializable {
 
     private String title;           // task name
     private LocalDateTime time;               // non-repetitive execution time

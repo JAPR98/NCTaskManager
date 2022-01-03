@@ -1,4 +1,5 @@
 package mx.edu.j2se.perez.tasks;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -264,7 +265,7 @@ public class LinkedTaskList extends AbstractTaskList {
      * @version     1.0 29 Nov 2021
      * @author      José Antonio Pérez Rodríguez
      */
-    private static class Node {
+    private static class Node implements Serializable {
         private final Task task;    //Object where the task data is stored
         private Node nextNode;      //A reference to its next neighbor
         private Node prevNode;      //A reference to its previous neighbor
@@ -275,7 +276,7 @@ public class LinkedTaskList extends AbstractTaskList {
          * @param task The task to be stored within
          *             the node
          */
-        private Node(Task task) {
+        private Node(Task task)  {
             this.task = task;
             nextNode = null;
             prevNode = null;

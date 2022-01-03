@@ -27,7 +27,7 @@ public class TaskListFactory {
             throw new IllegalArgumentException("The type " +
                     "mustn't be null");
         } else {
-            if (type == ListTypes.types.ARRAY) {
+            if (type == ListTypes.types.LINKED) {
                 storeTaskObject = new ArrayTaskList();
             } else {
                 storeTaskObject = new LinkedTaskList();

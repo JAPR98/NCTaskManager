@@ -3,7 +3,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Stream;
 
-public class Tasks {
+public class Tasks  {
 
     /**
      * allows to obtain a subset from the tasks list, which is
