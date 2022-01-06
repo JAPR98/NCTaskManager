@@ -50,7 +50,7 @@ public class TaskIO {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -95,7 +95,7 @@ public class TaskIO {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -117,7 +117,7 @@ public class TaskIO {
             writeBinary(tasks, out);
             out.close();
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -138,7 +138,7 @@ public class TaskIO {
             FileInputStream in = new FileInputStream(file);
             TaskIO.readBinary(tasks, in);
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -162,7 +162,7 @@ public class TaskIO {
             }
             out.close();
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -187,7 +187,7 @@ public class TaskIO {
                 tasks.add(gson.fromJson(reader, Task.class));
             }
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -208,7 +208,7 @@ public class TaskIO {
             Writer wr = new FileWriter(file);
             write(tasks,wr);
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -229,7 +229,7 @@ public class TaskIO {
             Reader rd = new FileReader(file);
             TaskIO.read(tasks, rd);
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 }
