@@ -28,9 +28,9 @@ public class TaskListFactory {
                     "mustn't be null");
         } else {
             if (type == ListTypes.types.LINKED) {
-                storeTaskObject = new ArrayTaskList();
-            } else {
                 storeTaskObject = new LinkedTaskList();
+            } else {
+                storeTaskObject = new ArrayTaskList();
             }
         }
         return storeTaskObject;

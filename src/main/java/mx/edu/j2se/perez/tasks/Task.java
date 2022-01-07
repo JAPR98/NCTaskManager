@@ -331,10 +331,10 @@ public class Task implements Cloneable, Serializable {
         if (this.isRepetitive) {
             return "Title: "+this.title+"\nStart: "+
                     this.start+"\nEnd: "+ this.end+"\nInterval: "+
-                    this.interval+"\nActive: "+ this.isActive+"\n";
+                    this.interval+"\nActive: "+ this.isActive;
         } else {
             return "Title: "+this.title+"\nTime: "+this.time+"\nActive: "+
-                    this.isActive+"\n";
+                    this.isActive;
         }
     }
 

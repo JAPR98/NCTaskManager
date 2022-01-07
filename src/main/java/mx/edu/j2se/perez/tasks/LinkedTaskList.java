@@ -230,16 +230,6 @@ public class LinkedTaskList extends AbstractTaskList {
     }
 
     /**
-     * Allows to represent the current object as a String
-     * @return the String representation of the object
-     */
-    @Override
-    public String toString() {
-        return "LinkedTaskList array, "+this.size()+
-                " elements";
-    }
-
-    /**
      * This method allows working with collections as with
      * Streams
      * @return a Stream of tasks

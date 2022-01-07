@@ -61,7 +61,7 @@ public class ArrayTaskList  extends AbstractTaskList{
         boolean isInTheList = false;
         if (task == null) {
             throw new IllegalArgumentException("The task mustn't be null");
-        } else if (taskArray.length == 0) {
+        } else if (size() == 0) {
             throw new RuntimeException("The tasks array is empty");
         } else {
             if ((taskArray.length == 1) && task.equals(taskArray[0])) {
@@ -182,15 +182,6 @@ public class ArrayTaskList  extends AbstractTaskList{
         return Arrays.hashCode(taskArray);
     }
 
-    /**
-     * Allows to represent the current object as a String
-     * @return the String representation of the object
-     */
-    @Override
-    public String toString() {
-       return "ArrayTaskList array, "
-               +this.size()+" elements";
-    }
 
     /**
      * This method allows working with collections as with

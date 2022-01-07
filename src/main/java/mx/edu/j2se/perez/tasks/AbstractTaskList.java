@@ -93,4 +93,21 @@ public abstract class AbstractTaskList implements Cloneable, Iterable<Task>, Ser
      * @return a Stream of tasks
      */
     abstract public Stream<Task> getStream();
+
+    /**
+     * Allows to represent the current object as a String
+     * @return the String representation of the object
+     */
+    @Override
+    public String toString() {
+        String toString = "[";
+        for (int i = 0; i < size(); i++) {
+            toString += getTask(i).toString();
+            if (i < size() - 1) {
+                toString += ",\n";
+            }
+        }
+        toString += "]";
+        return toString;
+    }
 }
